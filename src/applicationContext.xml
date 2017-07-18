@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                          http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+       					   http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 使用的是默认的构造函数去创建实例
+    <bean id="userServiceId" class="com.ccpg.serviceimpl.UserServiceImpl"></bean>
+    -->
+    <!--
+    使用静态工厂去创建实例
+    <bean id="userServiceId" class="com.ccpg.factories.StaticFactory" factory-method="getInstance"></bean>
+        -->
+    <!--
+使用实例工厂创建实力
+
+    <bean id="factoryId" class="com.ccpg.factories.InstanceFactory"></bean>
+    <bean id="userServiceId" factory-bean="factoryId" factory-method="getInstance"></bean>
+    -->
+    <!--
+        实现执行初始化和销毁的方法。
+
+    <bean  id="bookServiceId" class="com.ccpg2.serviceimpl.BookServiceImpl" init-method="init" destroy-method="destroy" scope="singleton"></bean>   -->
+
+    <!--
+    实现后处理Bean
+
+<bean id="userServiceId" class="com.ccpg3.lifecycle.UserServiceImpl" init-method="myInit" destroy-method="myDestroy"></bean>
+    <bean class="com.ccpg3.lifecycle.MyBeanPostProcessor"></bean>   -->
+
+
+    <!--
+        属性的依赖注入(根据属性的名字注入)
+        这种方式一般不使用
+
+    <bean id="userId" class="com.ccpg4.domain.User">
+    <constructor-arg name="uId" value="1"></constructor-arg>
+        <constructor-arg name="uName" value="zhangsan"></constructor-arg>
+        <constructor-arg name="uAge" value="20"></constructor-arg>
+    </bean> -->
+    <!--
+        属性的依赖注入(根据属性的角标)
+        使用名称
+
+    <bean id="userId" class="com.ccpg4.domain.User">
+        <constructor-arg index="0" value="1"></constructor-arg>
+        <constructor-arg index="1" value="zhangsan"></constructor-arg>
+        <constructor-arg index="2" value="20"></constructor-arg>
+    </bean>
+    -->
+<!--
+    属性的依赖注入，使用类型
+
+    <bean id="userId" class="com.ccpg4.domain.User">
+        <constructor-arg index="0" type="int" value="1"></constructor-arg>
+        <constructor-arg index="1" type="java.lang.String" value="lisi"></constructor-arg>
+        <constructor-arg index="2" type="int" value="22"></constructor-arg>
+    </bean>
+
+    -->
+
+    <!--
+    使用setter注入参数*(注意:这个实体类是不能有构造函数的)
+    public class Person {
+    private String uId;
+    private String uName;
+    private DetailAddress address;
+    public String getuId() {
+        return uId;
+    }
+    public void setuId(String uId) {
+        this.uId = uId;
+    }
+    public String getuName() {
+        return uName;
+    }
+    public void setuName(String uName) {
+        this.uName = uName;
+    }
+    public DetailAddress getAddress() {
+        return address;
+    }
+    public void setAddress(DetailAddress address) {
+        this.address = address;
+    }
+    @Override
+    public String toString() {
+        return "Person{" +
+                "uId='" + uId + '\'' +
+                ", uName='" + uName + '\'' +
+                ", address=" + address +
+                '}';
+    }
+}
+
+<bean id="pId" class="com.ccpg5.domain.Person">
+    <property name="uId" value="10001"></property>
+    <property name="uName" value="张三"></property>
+    <property name="address" ref="addressId"></property>
+</bean>
+<bean id="addressId" class="com.ccpg5.domain.DetailAddress">
+    <property name="code" value="001"></property>
+    <property name="detail" value="阿莎开始地区"></property>
+</bean>-->
+
+<!--
+p命名空间
+
+<bean id="uId" class="com.ccpg6.domain.User" p:uId="10001" p:uName="张三" p:uage="22"></bean>
+    -->
+<!--
+<bean id="serviceId" class="com.ccpg7.serviceimpl.UserServiceImpl">
+<property name="dao" ref="daoId"></property>
+</bean>
+<bean id="daoId" class="com.ccpg7.daoimpl.UserDaoImpl"></bean>
+   -->
+
+<!--注解实现注册-->
+<context:component-scan base-package="com.ccpg8"></context:component-scan>
+
+
+
+</beans>
